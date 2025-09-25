@@ -1,7 +1,7 @@
 using System.Collections.Concurrent;
 using System.Text;
 
-public class ReceiveMessageHandler
+public class ReceiveMessageHandler : IPADCommandHandler
 {
     private ConcurrentDictionary<string, ConcurrentQueue<PADMessage>> _queues;
 
