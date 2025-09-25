@@ -1,10 +1,23 @@
-﻿using System.Net;
+﻿using System.Collections.Concurrent;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using SimpleInjector;
 
 public class Program
 {
+    static Container diContainer;
+
     public Program() { }
+
+    static Program()
+    {
+        diContainer = new Container();
+        diContainer.Register(
+            () => new ConcurrentDictionary<string, ConcurrentQueue<PADMessage>>(),
+            Lifestyle.Singleton
+        );
+    }
 
     public static async Task Main()
     {

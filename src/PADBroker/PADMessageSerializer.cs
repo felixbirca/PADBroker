@@ -1,13 +1,14 @@
+using System.Text;
 using System.Text.Json;
 
 public static class PADMessageSerializer
 {
-    public static async Task<string> SerializeAsync()
+    public static byte[] Serialize(PADMessage message)
     {
-
+        return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(message));
     }
 
-    public static async Task<PADMessage> DeserializeAsync(string message)
+    public static PADMessage Deserialize(byte[] message)
     {
         var obj = JsonSerializer.Deserialize<PADMessage>(message);
 
