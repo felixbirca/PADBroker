@@ -16,7 +16,7 @@ public class GetMessageHandler : IBrokerCommandHandler<GetMessageRequest>
 
     public byte[] Handle(GetMessageRequest message)
     {
-        if (!_queues.TryGetValue(message.QueueName, out var queue))
+        if (!_queues.TryGetValue(message.Topic, out var queue))
         {
             return Encoding.UTF8.GetBytes(
                 JsonSerializer.Serialize(new GetMessageResponse { Success = false })
