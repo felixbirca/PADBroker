@@ -1,5 +1,7 @@
 ﻿using PADBroker.Sdk;
 
+namespace PADBroker.Producer;
+
 public class Program
 {
     public Program() { }

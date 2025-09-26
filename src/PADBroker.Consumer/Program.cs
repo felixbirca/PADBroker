@@ -1,5 +1,7 @@
 ﻿using PADBroker.Sdk;
 
+namespace PADBroker.Consumer;
+
 public class Program
 {
     private static readonly int InitialDelayMs = 100;
@@ -28,7 +30,8 @@ public class Program
                 if (response != null && response.Success && !string.IsNullOrEmpty(response.Content))
                 {
                     Console.WriteLine(
-                        $"[{DateTime.Now:HH:mm:ss}] Received message: {response.Content}");
+                        $"[{DateTime.Now:HH:mm:ss}] Received message: {response.Content}"
+                    );
 
                     // Reset delay on successful message retrieval
                     currentDelayMs = InitialDelayMs;
@@ -37,19 +40,22 @@ public class Program
                 {
                     // No message available, apply exponential backoff
                     Console.WriteLine(
-                        $"[{DateTime.Now:HH:mm:ss}] No messages available, waiting {currentDelayMs}ms...");
+                        $"[{DateTime.Now:HH:mm:ss}] No messages available, waiting {currentDelayMs}ms..."
+                    );
                     await Task.Delay(currentDelayMs);
 
                     // Increase delay for next iteration (exponential backoff)
                     currentDelayMs = Math.Min(
                         (int)(currentDelayMs * BackoffMultiplier),
-                        MaxDelayMs);
+                        MaxDelayMs
+                    );
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(
-                    $"[{DateTime.Now:HH:mm:ss}] Error retrieving message: {ex.Message}");
+                    $"[{DateTime.Now:HH:mm:ss}] Error retrieving message: {ex.Message}"
+                );
 
                 // Apply backoff on error as well
                 await Task.Delay(currentDelayMs);
