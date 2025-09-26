@@ -10,4 +10,8 @@
   <ItemGroup>
     <PackageReference Include="SimpleInjector" Version="5.5.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PADBroker.Sdk\PADBroker.Sdk.csproj" />
+  </ItemGroup>
 </Project>
