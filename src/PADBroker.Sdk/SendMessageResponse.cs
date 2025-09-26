@@ -1,6 +1,6 @@
 namespace PADBroker.Sdk;
 
-public class SendMessageResponse : BaseRequestMessage
+public class SendMessageResponse : BaseResponseMessage
 {
-    public bool Success;
+    public bool Success { get; set; }
 }

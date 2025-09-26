@@ -2,6 +2,6 @@ namespace PADBroker.Sdk;
 
 public class GetMessageResponse : BaseResponseMessage
 {
-    public bool Success;
-    public string Content = string.Empty;
+    public bool Success { get; set; }
+    public string Content { get; set; } = string.Empty;
 }

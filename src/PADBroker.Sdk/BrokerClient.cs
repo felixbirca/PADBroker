@@ -23,7 +23,7 @@ public class BrokerClient
 
         await stream.WriteAsync(
             Encoding.UTF8.GetBytes(
-                JsonSerializer.Serialize(
+                JsonSerializer.Serialize<BaseRequestMessage>(
                     new SendMessageRequest { Topic = topic, Content = content }
                 )
             )
@@ -40,9 +40,12 @@ public class BrokerClient
             return;
         }
 
-        var response = JsonSerializer.Deserialize<SendMessageResponse>(
-            Encoding.UTF8.GetString(buffer, 0, bytesRead)
-        );
+        Console.WriteLine("response string ", Encoding.UTF8.GetString(buffer, 0, bytesRead));
+
+        var response =
+            JsonSerializer.Deserialize<BaseResponseMessage>(
+                Encoding.UTF8.GetString(buffer, 0, bytesRead)
+            ) as SendMessageResponse;
 
         if (!response.Success)
         {
@@ -59,7 +62,9 @@ public class BrokerClient
 
         await stream.WriteAsync(
             Encoding.UTF8.GetBytes(
-                JsonSerializer.Serialize(new GetMessageRequest { Topic = topic })
+                JsonSerializer.Serialize<BaseRequestMessage>(
+                    new GetMessageRequest { Topic = topic }
+                )
             )
         );
         await stream.FlushAsync();

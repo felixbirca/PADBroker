@@ -20,8 +20,10 @@ public class SendMessageHandler : IBrokerCommandHandler<SendMessageRequest>
 
         queue.Enqueue(message.Content);
 
-        return Encoding.UTF8.GetBytes(
-            JsonSerializer.Serialize(new SendMessageResponse { Success = true })
+        var serializedResponse = JsonSerializer.Serialize<BaseResponseMessage>(
+            new SendMessageResponse { Success = true }
         );
+
+        return Encoding.UTF8.GetBytes(serializedResponse);
     }
 }

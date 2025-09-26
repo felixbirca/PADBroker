@@ -19,21 +19,27 @@ public class GetMessageHandler : IBrokerCommandHandler<GetMessageRequest>
         if (!_queues.TryGetValue(message.Topic, out var queue))
         {
             return Encoding.UTF8.GetBytes(
-                JsonSerializer.Serialize(new GetMessageResponse { Success = false })
+                JsonSerializer.Serialize<BaseResponseMessage>(
+                    new GetMessageResponse { Success = false }
+                )
             );
         }
+
+        Console.WriteLine("Found the queue");
 
         if (queue.TryDequeue(out var messageContent))
         {
             return Encoding.UTF8.GetBytes(
-                JsonSerializer.Serialize(
+                JsonSerializer.Serialize<BaseResponseMessage>(
                     new GetMessageResponse { Success = true, Content = messageContent }
                 )
             );
         }
 
         return Encoding.UTF8.GetBytes(
-            JsonSerializer.Serialize(new GetMessageResponse { Success = false })
+            JsonSerializer.Serialize<BaseResponseMessage>(
+                new GetMessageResponse { Success = false }
+            )
         );
     }
 }
